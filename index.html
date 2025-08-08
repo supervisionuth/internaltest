@@ -1,1 +1,27 @@
-Hello World
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Test BYOF avec Static Web App</title>
+</head>
+<body>
+    <h1>Test Bring Your Own Function</h1>
+    <button id="callApiBtn">Appeler l'API</button>
+    <pre id="result"></pre>
+
+    <script>
+        document.getElementById('callApiBtn').onclick = async function() {
+            const resultElem = document.getElementById('result');
+            resultElem.textContent = "Appel en cours...";
+            try {
+                const response = await fetch('/api/hello');
+                if (!response.ok) throw new Error('Erreur API: ' + response.status);
+                const data = await response.json();
+                resultElem.textContent = JSON.stringify(data, null, 2);
+            } catch (err) {
+                resultElem.textContent = "Erreur : " + err.message;
+            }
+        };
+    </script>
+</body>
+</html>
